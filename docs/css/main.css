@@ -3953,7 +3953,7 @@ a {
   width: 100px;
   height: 130px;
   background: transparent;
-  border: 3px solid var(--sand-color);
+/*   border: 3px solid var(--sand-color); */
   cursor: pointer;
 }
 .tooltip__txt {
