@@ -21,6 +21,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_mask_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_components_mask_js__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _components_fixheader_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/fixheader.js */ "./src/js/components/fixheader.js");
 /* harmony import */ var _components_fixheader_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_components_fixheader_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _components_active_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/active.js */ "./src/js/components/active.js");
+/* harmony import */ var _components_active_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_components_active_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _components_fixedTab_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/fixedTab.js */ "./src/js/components/fixedTab.js");
+/* harmony import */ var _components_fixedTab_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_components_fixedTab_js__WEBPACK_IMPORTED_MODULE_8__);
+
+
 
 
 
@@ -167,6 +173,25 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/js/components/active.js":
+/*!*************************************!*\
+  !*** ./src/js/components/active.js ***!
+  \*************************************/
+/***/ (() => {
+
+const list = document.querySelector('.useful__list');
+const items = document.querySelectorAll('.useful__item');
+list.addEventListener('click', e => {
+  items.forEach(item => {
+    item.classList.remove("useful__item--active");
+    if (e.target == item) {
+      item.classList.add("useful__item--active");
+    }
+  });
+});
+
+/***/ }),
+
 /***/ "./src/js/components/filter.js":
 /*!*************************************!*\
   !*** ./src/js/components/filter.js ***!
@@ -205,6 +230,60 @@ document.querySelector('nav').addEventListener('click', event => {
 
 /***/ }),
 
+/***/ "./src/js/components/fixedTab.js":
+/*!***************************************!*\
+  !*** ./src/js/components/fixedTab.js ***!
+  \***************************************/
+/***/ (() => {
+
+(function () {
+  var a = document.querySelector('.tabs__btns'),
+    b = null,
+    P = 80; // если ноль заменить на число, то блок будет прилипать до того, как верхний край окна браузера дойдёт до верхнего края элемента. Может быть отрицательным числом
+  window.addEventListener('scroll', Ascroll, false);
+  document.body.addEventListener('scroll', Ascroll, false);
+  function Ascroll() {
+    if (b == null) {
+      var Sa = getComputedStyle(a, ''),
+        s = '';
+      // for (var i = 0; i < Sa.length; i++) {
+      //   if (Sa[i].indexOf('box-shadow') == 0) {
+      //     s += Sa[i] + ': ' + Sa.getPropertyValue(Sa[i]) + '; '
+      //   }
+      // }
+      b = document.createElement('div');
+      b.style.cssText = s + '  padding-top: 20px; backdrop-filter: blur(20px); width: ' + a.offsetWidth + 'px;';
+      a.insertBefore(b, a.firstChild);
+      var l = a.childNodes.length;
+      for (var i = 1; i < l; i++) {
+        b.appendChild(a.childNodes[1]);
+      }
+      a.style.height = b.getBoundingClientRect().height + 'px';
+      a.style.padding = '0';
+      a.style.border = '0';
+    }
+    var Ra = a.getBoundingClientRect(),
+      R = Math.round(Ra.top + b.getBoundingClientRect().height - document.querySelector('.departments__marketing').getBoundingClientRect().top + 0); // селектор блока, при достижении верхнего края которого нужно открепить прилипающий элемент;  Math.round() только для IE; если ноль заменить на число, то блок будет прилипать до того, как нижний край элемента дойдёт до футера
+    if (Ra.top - P <= 0) {
+      if (Ra.top - P <= R) {
+        b.className = 'stop';
+        b.style.top = -R + 'px';
+      } else {
+        b.className = 'sticky';
+        b.style.top = P + 'px';
+      }
+    } else {
+      b.className = '';
+      b.style.top = '';
+    }
+    window.addEventListener('resize', function () {
+      a.children[0].style.width = getComputedStyle(a, '').width;
+    }, false);
+  }
+})();
+
+/***/ }),
+
 /***/ "./src/js/components/fixheader.js":
 /*!****************************************!*\
   !*** ./src/js/components/fixheader.js ***!
@@ -214,11 +293,12 @@ document.querySelector('nav').addEventListener('click', event => {
 const header = document.querySelector('.header');
 const hero = document.querySelector('.hero');
 const headerHeight = header.offsetHeight;
-const heroHeight = hero.offsetHeight;
+// const heroHeight = hero.offsetHeight;
+
 window.addEventListener('scroll', () => {
   let scrollDistance = window.scrollY;
   header.classList.add('header--opacity');
-  if (scrollDistance >= heroHeight + headerHeight) {
+  if (scrollDistance >= headerHeight) {
     header.classList.add('header--fixed');
     // hero.style.marginTop = `${headerHeight}px`;
   } else {
@@ -261,7 +341,11 @@ const iso = new (isotope_layout__WEBPACK_IMPORTED_MODULE_0___default())('.featur
   masonry: {
     columnWidth: 120,
     horizontalOrder: true,
-    percentPosition: true
+    percentPosition: true,
+    layoutMode: 'fitRows',
+    fitRows: {
+      equalheight: true
+    }
   }
 });
 const iso1 = new (isotope_layout__WEBPACK_IMPORTED_MODULE_0___default())('.features-masonry__freelance', {
