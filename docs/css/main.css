@@ -1103,11 +1103,16 @@ a {
 }
 @media (max-width: 1640px) {
   .features__item {
-    width: 570px;
+    width: 40%;
     font-size: 22px;
     line-height: 34px;
     padding: 30px 36px 30px 111px;
     margin-bottom: 25px;
+  }
+}
+@media (max-width: 1240px) {
+  .features__item {
+    width: 100%;
   }
 }
 @media (max-width: 1024px) {
@@ -1694,7 +1699,7 @@ a {
 @media (max-width: 576px) {
   .tabs__btns-text--absolute-bottom {
     position: absolute;
-    bottom: -30px;
+    bottom: -45px;
     left: -10px;
   }
 }
